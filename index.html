@@ -1,26 +1,23 @@
 <html>
 	<head>
-		<title>Inventario di Concetta</title>
-<meta name="description" content="Inventario di Concetta" />
+		<title>Inventario di Nicola</title>
+<meta name="description" content="Inventario di Nicola" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 	<style>
-		@font-face {
-    font-family: 'Barbie';
-    src: url(fonts/Barbie.ttf);
-}
+	
 
 	* {
-		font-family: Barbie;
+		font-family: Arial;
 	}
 	
 	
 
 	body {
-		background-color: #FAE4D7;
-		font-family: Barbie, Arial, Verdana, Georgia;
+		background-color: rgb(27, 27, 28);
+		font-family: Arial, Verdana, Georgia;
 		
 		padding: 0;
 		margin: 0;
@@ -29,34 +26,34 @@
 	.backgroundOpacity {
 		width: 100%;
 		height: 100%;
-		opacity: 0.2;
+		opacity: 0.5;
 		position: absolute;
-		background-image: url('./inventarioImages/Barbie-symbol.png');
+		background-image: url('./images/guitar.png');
 		background-repeat: no-repeat;
-		background-size: 90%;
-	
+		background-size: 30%;
+
 		background-position: center center;
 		
 	}
 	
 	.aggiungi {
-		opacity: 0.75; text-align: center; position: relative;background-image: url('inventarioImages/Shelf.png'); background-size: cover; width: 32%; margin-left: 4%; height: 50%; border: 5px solid white; float: left; box-shadow: 5px 5px 5px 5px rgba(255, 255, 255, 0.5); background-color: rgb(255, 85, 153);
+		opacity: 0.75; text-align: center; position: relative;background-image: url('images/Shelf.png'); background-size: cover; width: 32%; margin-left: 4%; height: 50%; border: 5px solid #1f1fc1; float: left; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.5); background-color: transparent;
 	}
 	
 	.aggiungi a {
-		color: rgb(255, 85, 153); text-decoration: none; font-weight: bold; position: absolute; width: 100%; height: 100%; font-size: 25pt; top: 40%; left: 0;
+		color: #1f1fc1; text-decoration: none; font-weight: bold; position: absolute; width: 100%; height: 100%; font-size: 25pt; top: 40%; left: 0;
 	}
 	
 	.database {
-		opacity: 0.75; text-align: center; position: relative;background-image: url('inventarioImages/ShelfComplete.png'); background-size: cover; width: 32%; margin-right: 4%; height: 50%; border: 5px solid white; float: right; box-shadow: 5px 5px 5px 5px rgba(255, 255, 255, 0.5); background-color: rgb(255, 85, 153);
+		opacity: 0.75; text-align: center; position: relative;background-image: url('images/fullshelf.png'); background-position: 10% 36%; background-repeat: no-repeat; background-size: cover; width: 32%; margin-right: 4%; height: 50%; border: 5px solid #1f1fc1; float: right; box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.5); background-color: transparent;
 	}
 	
 	.database a {
-		color: rgb(255, 85, 153); text-decoration: none; font-weight: bold; position: absolute; width: 100%; height: 100%; font-size: 25pt; top: 40%; left: 0;
+		color: #1f1fc1; text-decoration: none; font-weight: bold; position: absolute; width: 100%; height: 100%; font-size: 25pt; top: 40%; left: 0;
 	}
 	
 	.title {
-		color: rgb(255, 85, 153); font-size: 50pt; font-style: italic; text-align: center; padding: 15px;
+		color: #1f1fc1; font-size: 30pt; font-style: italic; text-align: center; padding: 15px;
 	}
 	
 	@media screen and (max-width: 400px) {
@@ -74,7 +71,7 @@
 	</head>
 	<body>
 		<div class="backgroundOpacity">&#160;</div>
-		<h1 class="title">Inventario Barbie - Concetta Di Maggio</h1>
+		<h1 class="title">Collezione musicale - Nicola Di Maggio</h1>
 		<div>
 		
 			<div onmouseover="this.style.opacity = 1" onmouseleave="this.style.opacity = 0.75" class="aggiungi" ><a href="./formInventario.php">Aggiungi</a></div>
