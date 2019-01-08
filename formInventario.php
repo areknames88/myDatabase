@@ -23,10 +23,6 @@
 	body {
 		background-color: lightgrey;
 		font-family: Arial, Verdana, Georgia;
-		background-image: url('./inventarioImages/Barbie-symbol.png');
-		background-repeat: no-repeat;
-		background-size: 500px;
-		background-position: 100% 25%;
 		padding: 0;
 		margin: 0;
 	}
