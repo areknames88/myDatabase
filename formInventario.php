@@ -299,10 +299,6 @@ window.onload = function() {
 <?php
 
 
-
-
-
-
 function correctImageOrientation($filename, $singleFileName) {
 	
   if (function_exists('exif_read_data')) {
@@ -447,6 +443,7 @@ if(isset($_POST['submit'])){
   
 		$query = "INSERT INTO collezione VALUES (DEFAULT," . isEmptyNome(pg_escape_string($_POST['titolo'])) . "," . ifEmpty(pg_escape_string($_POST['artista'])) . "," . ifEmpty($_POST['anno']) .  "," . ifEmpty(pg_escape_string($_POST['etichetta'])) . "," . ifEmpty(pg_escape_string($tipo)) . "," . isEmptyCover($_POST['copertina']) . "," . isEmptyCover($_POST['interno']) . ")";
 
+	echo "<script type='text/javascript'>alert('Inserimento avvenuto con successo!')</script>";
 	
 	$result = pg_query($query) or die ('Inserimento Fallito'); 
 	
