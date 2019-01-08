@@ -7,6 +7,7 @@ Installare il database **POSTGRESQL** (https://www.postgresql.org/download/windo
 **MODIFICHE AL FILE php.ini DELLA CARTELLA PHP IN C:\xampp**
 
 **Togliere il commento (;) alle seguenti righe:**
+<br />
 extension=php_pdo_mysql.dll
 extension=php_pdo_pgsql.dll
 extension=php_pdo_sqlite.dll
