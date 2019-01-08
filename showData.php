@@ -280,15 +280,15 @@
 		<tr id="intestazione" style="text-align: center">
 	
 		<td><h3 class="intestations">Titolo <p class="intestationDropdown">
-					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=titolo&order=ascendente" ?>" title="Ordina per nome in senso ascendente">Ascendente</a>
+					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=titolo&order=ascendente" ?>" title="Ordina per titolo in senso ascendente">Ascendente</a>
 					<br />
-					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=titolo&order=discendente" ?>" title="Ordina per nome in senso discendente">Discendente</a>
+					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=titolo&order=discendente" ?>" title="Ordina per titolo in senso discendente">Discendente</a>
 		</p></h3></td>
 		<td><h3 class="intestations">Artista/Gruppo
 			<p class="intestationDropdown">
-					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=artista&order=ascendente" ?>" title="Ordina per genere in senso ascendente">Ascendente</a>
+					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=artista&order=ascendente" ?>" title="Ordina per artista/gruppo in senso ascendente">Ascendente</a>
 					<br />
-					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=artista&order=discendente" ?>" title="Ordina per genere in senso discendente">Discendente</a>
+					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=artista&order=discendente" ?>" title="Ordina per artista/gruppo in senso discendente">Discendente</a>
 		</p>
 		</h3></td>
 		<td><h3 class="intestations">Anno <p class="intestationDropdown">
@@ -297,9 +297,9 @@
 					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=anno&order=discendente" ?>" title="Ordina per anno in senso discendente">Discendente</a>
 		</p></h3></td>
 		<td><h3 class="intestations">Etichetta<p class="intestationDropdown">
-					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=etichetta&order=ascendente" ?>" title="Ordina per anno in senso ascendente">Ascendente</a>
+					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=etichetta&order=ascendente" ?>" title="Ordina per etichetta in senso ascendente">Ascendente</a>
 					<br />
-					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=etichetta&order=discendente" ?>" title="Ordina per anno in senso discendente">Discendente</a>
+					<a class="intestationLinks" href="<?php echo $_SERVER['PHP_SELF'] . "?pag=1&sort=etichetta&order=discendente" ?>" title="Ordina per etichetta in senso discendente">Discendente</a>
 		</p></h3></td>
 		<td><h3 class="intestations">Tipo</h3></td>
 		<td><h3>Copertina</h3></td>	
