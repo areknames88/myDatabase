@@ -354,7 +354,8 @@
 				echo "<br />";
 			}
 			
-		
+			
+			if ($row[6] != "empty.png") {
 				echo "</div>";
 		
 				echo "<div class='imgDiv'>";
@@ -363,7 +364,9 @@
 		
 				echo "</div>";
 				
-				if ($row[7] != NULL) {
+				}
+				
+				if ($row[7] != "empty.png") {
 				echo "<div class='imgDiv'>";
 		
 				echo "<img src='inventarioImages/$row[7]' />";
