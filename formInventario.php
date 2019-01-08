@@ -455,7 +455,7 @@ pg_close($connection);
 ?>
 </ul>
 
-<a class="homeIcon" title="Vai alla pagina iniziale" href="InventarioNicola/index.html">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</a>
+<a class="homeIcon" title="Vai alla pagina iniziale" href="./index.html">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</a>
 
 </div>
 
