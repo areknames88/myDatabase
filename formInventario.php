@@ -262,7 +262,9 @@ window.onload = function() {
 <li>
 	<h3>Tipo:</h3>
 	<select name="tipo">
-		<option value="Vinile">Vinile</option>
+		<option value="Vinile 33 giri">Vinile 33 giri</option>
+		<option value="Vinile 45 giri">Vinile 45 giri</option>
+		<option value="Vinile 78 giri">Vinile 78 giri</option>
 		<option value="Cd">Cd</option>
 	</select>
 </li>	
