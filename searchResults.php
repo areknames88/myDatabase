@@ -186,8 +186,8 @@
 	}
 	
 	#intestazione td {
-		background-color: #1f1fc1 !important;
-		color: ivory;
+		background-color: lightgrey !important;
+		color: black;
 		font-weight: bold;
 		
 	}
