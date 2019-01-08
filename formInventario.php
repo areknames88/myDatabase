@@ -21,8 +21,8 @@
 	
 
 	body {
-		background-color: #FAE4D7;
-		font-family: Barbie, Arial, Verdana, Georgia;
+		background-color: lightgrey;
+		font-family: Arial, Verdana, Georgia;
 		background-image: url('./inventarioImages/Barbie-symbol.png');
 		background-repeat: no-repeat;
 		background-size: 500px;
@@ -47,7 +47,7 @@
 		border-bottom: 2.3px dotted black;
 		font-size: 16pt;
 		width: 50%;
-		background-color: #FAE4D7;
+		background-color: lightgrey;
 	}
 	
 	h3 {
@@ -58,10 +58,13 @@
 	#submitButton, .buttons {
 		padding: 10px;
 		font-size: 16pt;
-		background-color: rgb(255, 85, 153);
-		border: 2px solid ivory;
-		outline: 1px solid grey;
-		box-shadow: 5px 5px 5px 5px rgba(255, 255, 255, 0.5);
+		background-color: lightblue;
+		border: 0.5px solid black;
+		box-shadow: 2px 2px 2px 2px grey;
+	}
+	
+	#addCover {
+			float: left; cursor: pointer; margin-left: 60px; background-color: lightblue; border: 0.5px solid black;width: 20%; height: 300px; font-size: 20pt; font-variant: small-caps
 	}
 	
 	#canvasCont {
@@ -155,8 +158,7 @@
 		<div id="rettangolo" style="position: absolute; display: none; width: 320px; height: 320px; border: 2px solid red"></div>
 	</div>
 	
-	<button id="addCover" style="float: left; cursor: pointer; margin-left: 60px; background-color: rgb(255, 85, 153); border: 2px solid ivory;
-		outline: 1px solid grey; width: 20%; height: 300px; font-size: 20pt; font-variant: small-caps">
+	<button id="addCover">
 		Aggiungi Foto
 	</button>
 	
@@ -242,38 +244,41 @@ window.onload = function() {
 <ul id="primaryForm">
 <form action="formInventario.php"  enctype="multipart/form-data" method="POST">
 <li>
-	<h3>Nome:</h3>
-	<input spellcheck="false" autocomplete="off" type="text" name="nome"  />
+	<h3>Titolo:</h3>
+	<input spellcheck="false" autocomplete="off" type="text" name="titolo"  />
 </li>
 <li>
-	<h3>Genere:</h3>
-	<input spellcheck="false" oninput="ifCollector(this)" autocomplete="off" type="text" name="genere" />
-	<input spellcheck="false" class="labelInput" placeholder="Inserisci Label" autocomplete="off" type="text" name="label" />
+	<h3>Artista/Gruppo:</h3>
+	<input spellcheck="false" oninput="ifCollector(this)" autocomplete="off" type="text" name="artista" />
 </li>
 <li>
 	<h3>Anno:</h3>
 	<input spellcheck="false" autocomplete="off" type="number" name="anno" />
 </li>
 <li>
-	<h3>Valutazione:</h3>
-	<input spellcheck="false" autocomplete="off" type="number" name="valutazione" />
+	<h3>Etichetta:</h3>
+	<input spellcheck="false" autocomplete="off" type="text" name="etichetta" />
 </li>
 <li>
-	<h3>&#160;</h3>
-	<input type="checkbox" id="checkConvention">Convention Doll</input>
-	<input type="hidden" id="inputConvention" name="convention" value="FALSE" />
-</li>
-<li>
-	<h3>Descrizione:</h3>
-	<textarea spellcheck="false" style="font-size: 15pt;" autocomplete="off" cols="55" rows="5" name="descrizione"></textarea>
-</li>
-	
+	<h3>Tipo:</h3>
+	<select name="tipo">
+		<option value="Vinile">Vinile</option>
+		<option value="Cd">Cd</option>
+	</select>
+</li>	
 <li>
 	<h3>Copertina</h3>
 	<input id="copertinaInput" autocomplete="off" type="text" name="copertina" />
 	<br /><br />
 	
 	<input type="file" name="fileInput" accept="image/*" onchange="fillCopertina(this)" />
+	
+	<br /> <br />
+	<h3>Retro/Interno</h3>
+	<input id="internoInput" autocomplete="off" type="text" name="interno" />
+	<br /><br />
+	
+	<input type="file" name="fileInternoInput" accept="image/*" onchange="fillInterno(this)" />
 	
 	<br /> <br />
 	<input name="submit" id="submitButton" type="submit" value="Aggiungi"  />
@@ -343,9 +348,44 @@ if(isset($_POST['submit'])){
     }
 
 	 move_uploaded_file($file_tmp,"./inventarioImages/".$_POST['copertina']);
-	 correctImageOrientation($_SERVER['DOCUMENT_ROOT'] . "/inventarioConcetta/inventarioImages/" . $_POST['copertina'], $_POST['copertina']);
+	 correctImageOrientation($_SERVER['DOCUMENT_ROOT'] . "/InventarioNicola/inventarioImages/" . $_POST['copertina'], $_POST['copertina']);
 	 
 			$imagepath = $_POST['copertina'];
+          $save = "./inventarioImages/" . $imagepath; //This is the new file you saving
+          $file = "./inventarioImages/" . $imagepath; //This is the original file
+          list($width, $height) = getimagesize($file) ;
+          $modwidth = 1000;
+          $diff = $width / $modwidth;
+          $modheight = $height / $diff;   
+          $tn = imagecreatetruecolor($modwidth, $modheight) ;
+          $image = imagecreatefromjpeg($file) ;
+          imagecopyresampled($tn, $image, 0, 0, 0, 0, $modwidth, $modheight, $width, $height) ;
+                          
+          imagejpeg($tn, $save, 100) ;
+
+        //thumbnail image making part
+
+       
+
+	}
+	
+	$fileInterno_name = $_FILES['fileInternoInput']['name'];
+     $fileInterno_size =$_FILES['fileInternoInput']['size'];
+     $fileInterno_tmp =$_FILES['fileInternoInput']['tmp_name'];
+     $fileInterno_type=$_FILES['fileInternoInput']['type'];
+	 
+	 if (!empty($fileInterno_name)) {
+		
+		if ($_FILES["fileInternoInput"]["error"] > 0)
+    {
+        echo "Apologies, an error has occurred.";
+        echo "Error Code: " . $_FILES["fileInternoInput"]["error"];
+    }
+
+	 move_uploaded_file($fileInterno_tmp,"./inventarioImages/".$_POST['interno']);
+	 correctImageOrientation($_SERVER['DOCUMENT_ROOT'] . "/InventarioNicola/inventarioImages/" . $_POST['interno'], $_POST['interno']);
+	 
+			$imagepath = $_POST['interno'];
           $save = "./inventarioImages/" . $imagepath; //This is the new file you saving
           $file = "./inventarioImages/" . $imagepath; //This is the original file
           list($width, $height) = getimagesize($file) ;
@@ -386,17 +426,16 @@ if(isset($_POST['submit'])){
   
 		function isEmptyNome($string) {
 		if ($string == '' || $string == "''") {
-        return "'Senza nome'";
+        return "'Senza titolo'";
     } else {
         return "'$string'";
     }
 	}
   
-	$convention = $_POST['convention'];
+	$tipo = $_POST['tipo'];
   
   
-		$query = "INSERT INTO dolls VALUES (DEFAULT," . isEmptyNome(pg_escape_string($_POST['nome'])) . "," . ifEmpty(pg_escape_string($_POST['genere'])) . "," . ifEmpty(pg_escape_string($_POST['label'])) . ",
-" . ifEmpty($_POST['anno']) . "," . ifEmpty(pg_escape_string($_POST['valutazione'])) . ", $convention," . ifEmpty(pg_escape_string($_POST['descrizione'])) . "," . isEmptyCover($_POST['copertina']) . ")";
+		$query = "INSERT INTO collezione VALUES (DEFAULT," . isEmptyNome(pg_escape_string($_POST['titolo'])) . "," . ifEmpty(pg_escape_string($_POST['artista'])) . "," . ifEmpty($_POST['anno']) .  "," . ifEmpty(pg_escape_string($_POST['etichetta'])) . "," . ifEmpty(pg_escape_string($tipo)) . "," . isEmptyCover($_POST['copertina']) . "," . isEmptyCover($_POST['interno']) . ")";
 
 	
 	$result = pg_query($query) or die ('Inserimento Fallito'); 
@@ -406,7 +445,7 @@ pg_close($connection);
 ?>
 </ul>
 
-<a style="margin-left: 20px; background-image: url('inventarioImages/home.png'); background-size: cover; position: relative;  bottom: 0; font-size: 20pt; text-decoration: none" title="Vai alla pagina iniziale" href="/InventarioConcetta/index.html">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</a>
+<a style="margin-left: 20px; background-image: url('inventarioImages/home.png'); background-size: cover; position: relative;  bottom: 0; font-size: 20pt; text-decoration: none" title="Vai alla pagina iniziale" href="InventarioNicola/index.html">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</a>
 
 </div>
 
@@ -420,6 +459,19 @@ pg_close($connection);
 	
 	} else {
 		document.getElementById("copertinaInput").value = fileName;
+	} 
+	
+		
+		
+	}
+	
+	function fillInterno(elem) {
+			var fileName = prompt("Inserisci il nome del file con la corretta estensione");
+
+	if (fileName == null || fileName == "") {
+	
+	} else {
+		document.getElementById("internoInput").value = fileName;
 	} 
 	
 		

@@ -5,7 +5,7 @@
 					$arrayDoll = explode(" ", $_POST['idDoll']);
 					
 					foreach($arrayDoll as $doll) {
-						$query = "DELETE FROM dolls WHERE dolls.id = $doll";
+						$query = "DELETE FROM collezione WHERE collezione.id = $doll";
 						$result = pg_query($connection, $query) or die("fallito");
 					}
 					
@@ -52,13 +52,13 @@
 					
 					$queryCounter;
 					if ($valoreParziale != '') {
-						$queryCounter = "SELECT * FROM dolls WHERE LOWER($campo) LIKE '%$valoreParziale%'";
+						$queryCounter = "SELECT * FROM collezione WHERE LOWER($campo) LIKE '%$valoreParziale%'";
 					} else if ($valore != '') {
 						if ($campo != 'convention') {
-								$queryCounter = "SELECT * FROM dolls WHERE LOWER($campo)='$valore'";
+								$queryCounter = "SELECT * FROM collezione WHERE LOWER($campo)='$valore'";
 								
 							} else if ($campo == 'convention') {
-								$queryCounter = "SELECT * FROM dolls WHERE $campo=$valore";
+								$queryCounter = "SELECT * FROM collezione WHERE $campo=$valore";
 							}
 					}
 					
@@ -116,36 +116,32 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Inventario di Concetta</title>
-<meta name="description" content="Inventario di Concetta" />
+<title>Inventario di Nicola</title>
+<meta name="description" content="Inventario di Nicola" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <style>
-			@font-face {
-    font-family: 'Barbie';
-    src: url(fonts/Barbie.ttf);
-}
+	
 
 
 
 		* {
-		font-family: Barbie;
+		font-family: Arial;
 	}
 
 	body {
-		background-color: #FAE4D7;
-		font-family: Barbie, Arial, Verdana, Georgia;
+		background-color: lightgrey;
+		font-family: Arial, Verdana, Georgia;
 	}
 	
 	.buttons {
 		padding: 10px;
 		font-size: 16pt;
-		background-color: rgb(255, 85, 153);
-		border: 2px solid ivory;
-		outline: 1px solid grey;
-		box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.5);
+		background-color: lightblue;
+		border: 0.5px solid black;
+		box-shadow: 2px 2px 2px 2px grey;
 	}
 	
 	h3 {
@@ -165,7 +161,7 @@
 	
 	#mainTable tr td {
 		border: 0.2px solid grey;
-		background-color: white;
+		background-color: lightblue;
 		width: 10%;
 		
 		
@@ -176,11 +172,11 @@
 		border: none;
 		border-bottom: 2.3px dotted black;
 		font-size: 12pt;
-		background-color: #FAE4D7;
+		background-color: lightgrey;
 	}
 	
 	select {
-			color: rgb(255, 85, 153);
+			color: #1f1fc1;
 	}
 	
 	#scroller {
@@ -190,7 +186,7 @@
 	}
 	
 	#intestazione td {
-		background-color: rgb(255, 85, 153) !important;
+		background-color: #1f1fc1 !important;
 		color: ivory;
 		font-weight: bold;
 		
@@ -279,8 +275,9 @@
 	
 	.deleteButton {
 			background-color: transparent;
-			background-image: url('inventarioImages/delete.png');
-			background-size: cover;
+			background-image: url('images/delete.png');
+			background-size: contain;
+			background-repeat: no-repeat;
 			border: none;
 			pointer-events: none;
 			opacity: 0.5;
@@ -304,17 +301,17 @@
 		
 		<input type='hidden' id='counter' name="pag" />
 			<tr id="intestazione" style="text-align: center">
-		<td><h3 class="intestations">Nome <p class="intestationDropdown">
+		<td><h3 class="intestations">Titolo <p class="intestationDropdown">
 					<a class="intestationLinks" href="<?php 
 					if (isset($_GET['valoreRicerca'])) {
 						$valore = str_replace("+", " ", $_GET['valoreRicerca']);
 						
 					$campo = $_GET['campoRicerca'];
-					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=nome&order=ascendente"; 
+					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=titolo&order=ascendente"; 
 					} else if (isset($_GET['valoreRicercaContiene'])) {
 						$valoreParziale = strtolower(str_replace("+", " ", $_GET['valoreRicercaContiene']));
 						$campo = $_GET['campoRicerca'];
-						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=nome&order=ascendente"; 
+						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=titolo&order=ascendente"; 
 					}
 					?>" title="Ordina per nome in senso ascendente">Ascendente</a>
 					<br />
@@ -322,35 +319,35 @@
 						$valore = str_replace("+", " ", $_GET['valoreRicerca']);
 						
 					$campo = $_GET['campoRicerca'];
-					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=nome&order=discendente"; 
+					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=titolo&order=discendente"; 
 					} else if (isset($_GET['valoreRicercaContiene'])) {
 						$valoreParziale = str_replace("+", " ", $_GET['valoreRicercaContiene']);
 						$campo = $_GET['campoRicerca'];
-						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=nome&order=discendente"; 
+						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=titolo&order=discendente"; 
 					} ?>" title="Ordina per nome in senso discendente">Discendente</a>
 		</p></h3></td>
-		<td><h3 class="intestations">Genere
+		<td><h3 class="intestations">Artista/Gruppo
 			<p class="intestationDropdown">
 					<a class="intestationLinks" href="<?php if (isset($_GET['valoreRicerca'])) {
 						$valore = str_replace("+", " ", $_GET['valoreRicerca']);
 						
 					$campo = $_GET['campoRicerca'];
-					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=genere&order=ascendente"; 
+					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=artista&order=ascendente"; 
 					} else if (isset($_GET['valoreRicercaContiene'])) {
 						$valoreParziale = str_replace("+", " ", $_GET['valoreRicercaContiene']);
 						$campo = $_GET['campoRicerca'];
-						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=genere&order=ascendente"; 
+						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=artista&order=ascendente"; 
 					} ?>" title="Ordina per genere in senso ascendente">Ascendente</a>
 					<br />
 					<a class="intestationLinks" href="<?php if (isset($_GET['valoreRicerca'])) {
 						$valore = str_replace("+", " ", $_GET['valoreRicerca']);
 						
 					$campo = $_GET['campoRicerca'];
-					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=genere&order=discendente"; 
+					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=artista&order=discendente"; 
 					} else if (isset($_GET['valoreRicercaContiene'])) {
 						$valoreParziale = str_replace("+", " ", $_GET['valoreRicercaContiene']);
 						$campo = $_GET['campoRicerca'];
-						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=genere&order=discendente"; 
+						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=artista&order=discendente"; 
 					} ?>" title="Ordina per genere in senso discendente">Discendente</a>
 		</p>
 		</h3></td>
@@ -377,9 +374,30 @@
 						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=anno&order=discendente"; 
 					} ?>" title="Ordina per anno in senso discendente">Discendente</a>
 		</p></h3></td>
-		<td style="width: 2%"><h3 class="intestations">Valutazione</h3></td>
-		<td><h3 class="intestations">Convention</h3></td>
-		<td><h3>Descrizione</h3></td>
+		<td style="width: 2%"><h3 class="intestations">Etichetta<p class="intestationDropdown">
+					<a class="intestationLinks" href="<?php if (isset($_GET['valoreRicerca'])) {
+						$valore = str_replace("+", " ", $_GET['valoreRicerca']);
+						
+					$campo = $_GET['campoRicerca'];
+					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=etichetta&order=ascendente"; 
+					} else if (isset($_GET['valoreRicercaContiene'])) {
+						$valoreParziale = str_replace("+", " ", $_GET['valoreRicercaContiene']);
+						$campo = $_GET['campoRicerca'];
+						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=etichetta&order=ascendente"; 
+					} ?>" title="Ordina per anno in senso ascendente">Ascendente</a>
+					<br />
+					<a class="intestationLinks" href="<?php if (isset($_GET['valoreRicerca'])) {
+						$valore = str_replace("+", " ", $_GET['valoreRicerca']);
+						
+					$campo = $_GET['campoRicerca'];
+					echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=etichetta&order=discendente"; 
+					} else if (isset($_GET['valoreRicercaContiene'])) {
+						$valoreParziale = str_replace("+", " ", $_GET['valoreRicercaContiene']);
+						$campo = $_GET['campoRicerca'];
+						echo $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=etichetta&order=discendente"; 
+					} ?>" title="Ordina per anno in senso discendente">Discendente</a>
+		</p></h3></td>
+		<td><h3 class="intestations">Tipo</h3></td>
 		<td><h3>Copertina</h3></td>
 		<td style="width: 2%;background-color: white !important">	<form method='POST'><input type='hidden' id='idDollContainer' name='idDoll' value='' /><input class='deleteButton' id="deleteButton" title='Elimina' type='submit' value='&#160;&#160;&#160;' name='delete' /></form></td>
 		</tr>
@@ -435,16 +453,16 @@
 			$total;
 			$count;
 				if (isset($_GET['valoreRicerca']) && $campo != 'convention') {
-			$queryCounter = "SELECT * FROM dolls WHERE CAST($campo as text) ='$valore'";
+			$queryCounter = "SELECT * FROM collezione WHERE CAST($campo as text) ='$valore'";
 			$total = pg_query($connection, $queryCounter) or die("fallito");
 					$count = pg_num_rows($total);
 				} else if (isset($_GET['valoreRicerca']) && $campo == 'convention') {
-					$queryCounter = "SELECT * FROM dolls WHERE CAST($campo as text) =$valore";
+					$queryCounter = "SELECT * FROM collezione WHERE CAST($campo as text) =$valore";
 			$total = pg_query($connection, $queryCounter) or die("fallito");
 					$count = pg_num_rows($total);
 				} 
 				else if (isset($_GET['valoreRicercaContiene'])) {
-				$queryCounter = "SELECT * FROM dolls WHERE CAST($campo as text) ILIKE '%$valoreParziale%'";
+				$queryCounter = "SELECT * FROM collezione WHERE CAST($campo as text) ILIKE '%$valoreParziale%'";
 				$total = pg_query($connection, $queryCounter) or die("fallito");
 					$count = pg_num_rows($total);
 					
@@ -475,7 +493,7 @@
 	$sort = $_GET['sort'];
 } else {
   
-   $sort = "nome";
+   $sort = "titolo";
 }
 
 	$orderParameter; 
@@ -499,61 +517,56 @@
 	
 	if (isset($_GET['valoreRicerca'])) {
 	if ($_GET['valoreRicerca'] == 'TRUE' || $_GET['valoreRicerca'] == 'FALSE') {
-	$query = "SELECT * FROM dolls WHERE CAST($campo as text) = $valore ORDER BY $sort $order LIMIT $x_pag OFFSET $offset"; 
+	$query = "SELECT * FROM collezione WHERE CAST($campo as text) = $valore ORDER BY $sort $order LIMIT $x_pag OFFSET $offset"; 
 	} else {
-	$query = "SELECT * FROM dolls WHERE CAST($campo as text) ='$valore' ORDER BY $sort $order LIMIT $x_pag OFFSET $offset"; 
+	$query = "SELECT * FROM collezione WHERE CAST($campo as text) ='$valore' ORDER BY $sort $order LIMIT $x_pag OFFSET $offset"; 
 	}
 	} else if (isset($_GET['valoreRicercaContiene'])) {
-	$query = "SELECT * FROM dolls WHERE CAST($campo as text) ILIKE '%$valoreParziale%' ORDER BY $sort $order LIMIT $x_pag OFFSET $offset"; 
+	$query = "SELECT * FROM collezione WHERE CAST($campo as text) ILIKE '%$valoreParziale%' ORDER BY $sort $order LIMIT $x_pag OFFSET $offset"; 
 	
 	} 
 		$rs = pg_query($connection, $query) or die("Cannot execute query: $query\n");
 		
 		$countRows = pg_num_rows($rs);
 		
-		$singleurl = "/InventarioConcetta/onerecord.php";
+		$singleurl = "/InventarioNicola/onerecord.php";
 		
 		while ($row = pg_fetch_row($rs)) {
 			
-				$label;
-				if ($row[3] != '') {
-				$label = " - $row[3]";	
+				$internoCopertina;
+				if ($row[7] != "empty.png") {
+						$internoCopertina = $row[7];
+						
 				} else {
-				$label = "";
+						$internoCopertina = $row[6];
 				}
-			
-				$conventionDoll;
-				if ($row[6] == 't') {
-					$conventionDoll = "Si";
-				} else {
-					$conventionDoll = "No";
-				}
-			
+				
+				
 				echo "	<tr style='text-align: center'><td style='padding: 2px'>";
-				echo "<a style='color: rgb(255, 85, 153); padding: 2px; font-size: 12.5pt; text-decoration: none; margin-right: 10px;' href=\"" . $singleurl . "?itemId=$row[0]&pag=" . ($pag) . "&valoreRicerca=$valoreOneRecord&valoreRicercaContiene=$valoreParzialeOneRecord&campoRicerca=$campo&ricerca=true&sort=$sort&order=$orderParameter\">";
-				echo "<span style='font-style: italic; font-size: 11pt'>$row[1]</span></a></td>  	<td>$row[2]$label</td> 
-				<td>$row[4]</td><td>$row[5]</td><td>$conventionDoll</td><td>" . substr($row[7], 0, 50) . "...</td>
-				<td class='coverCell' style='width: 80px; height: 120px; background-repeat: no-repeat; background-position: center center; background-image: url(inventarioImages/$row[8]); background-size: contain; background-color: lightgrey !important'> <img class='hiddenImage' src='inventarioImages/$row[8]' /> </td>	<td style='width: 2%'><input data-id='$row[0]' onclick=\"return fillDelete(this)\" type='checkbox' class='checkDelete' /></td></tr>";
+				echo "<a style='color: #1f1fc1; padding: 2px; font-size: 12.5pt; text-decoration: none; margin-right: 10px;' href=\"" . $singleurl . "?itemId=$row[0]&pag=" . ($pag) . "&valoreRicerca=$valoreOneRecord&valoreRicercaContiene=$valoreParzialeOneRecord&campoRicerca=$campo&ricerca=true&sort=$sort&order=$orderParameter\">";
+				echo "<span style='font-style: italic; font-size: 11pt'>$row[1]</span></a></td> 	<td>$row[2]</td> 
+				<td>$row[3]</td><td>$row[4]</td><td>$row[5]</td>
+				<td class='coverCell' style='width: 80px; height: 120px; background-repeat: no-repeat; background-position: center center; background-image: url(inventarioImages/$row[6]); background-size: contain; background-color: lightgrey !important'> <img class='hiddenImage' src='inventarioImages/$internoCopertina' /> </td><td style='width: 2%'><input data-id='$row[0]' onclick=\"return fillDelete(this)\" type='checkbox' class='checkDelete' /></td></tr>";
 				
 				
 		}
 if (isset($_GET['valoreRicerca'])) {
 		if ($all_pages > 1){
   if ($pag > 1){
-    echo "<a stitle='Pagina Indietro' style='position: fixed; bottom: 0; left: 94%; font-weight: bold; color: rgb(255, 85, 153); font-size: 40pt; text-decoration: none; font-variant:small-caps' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag - 1) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+    echo "<a stitle='Pagina Indietro' style='position: fixed; bottom: 0; left: 94%; font-weight: bold; color: #1f1fc1; font-size: 40pt; text-decoration: none; font-variant:small-caps' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag - 1) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
     echo "<</a>&nbsp;";
 	
 	
 
   } 
   if ($all_pages > $pag){
-    echo "<a title='Pagina Avanti' style='position: fixed; bottom: 0; left: 97%; font-weight: bold; color: rgb(255, 85, 153); font-size: 40pt; text-decoration: none; font-variant:small-caps' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag + 1) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+    echo "<a title='Pagina Avanti' style='position: fixed; bottom: 0; left: 97%; font-weight: bold; color: #1f1fc1; font-size: 40pt; text-decoration: none; font-variant:small-caps' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag + 1) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
     echo "></a>";
   }
 		echo "<br />";
 		//if ($all_pages < 5) {
 	//for ($i = 0; $i < $all_pages; $i++) {
-		//echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i + 1) . "&sort=$sort&order=$orderParameter\">";
+		//echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i + 1) . "&sort=$sort&order=$orderParameter\">";
 		//echo ($i + 1) . "</a>";
 	//}
 	//} else {
@@ -566,16 +579,16 @@ if (isset($_GET['valoreRicerca'])) {
 	
 		
 		if ($pag > 1) {
-				echo "<a title='Vai alla prima pagina' style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+				echo "<a title='Vai alla prima pagina' style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=1&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo "<<</a>";
 		
-				echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag - 1) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+				echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag - 1) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo "<</a>";
 		}
 		
 		for ($i = $pag - 10; $i < $pag; $i++) {
 			if (in_array($i, $all_pages_array)) {
-			echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+			echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo ($i) . "</a>";
 				}
 				
@@ -583,15 +596,15 @@ if (isset($_GET['valoreRicerca'])) {
 		
 		for ($i = $pag; $i < $pag+10; $i++) {
 			if (in_array($i, $all_pages_array)) {
-			echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+			echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo ($i) . "</a>";
 				}
 				
 		}
 		 if ($all_pages > $pag){
-			echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag + 1) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+			echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag + 1) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo "></a>";
-				echo "<a title='Vai all\'ultima pagina' style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($all_pages) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+				echo "<a title='Vai all\'ultima pagina' style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($all_pages) . "&valoreRicerca=$valore&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo ">></a>";
 		}
 		
@@ -602,14 +615,14 @@ if (isset($_GET['valoreRicerca'])) {
 } else if (isset($_GET['valoreRicercaContiene'])) {
 		if ($all_pages > 1){
   if ($pag > 1){
-     echo "<a stitle='Pagina Indietro' style='position: fixed; bottom: 0; left: 94%; font-weight: bold; color: rgb(255, 85, 153); font-size: 40pt; text-decoration: none; font-variant:small-caps' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag - 1) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+     echo "<a stitle='Pagina Indietro' style='position: fixed; bottom: 0; left: 92%; font-weight: bold; color: #1f1fc1; font-size: 40pt; text-decoration: none; font-variant:small-caps' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag - 1) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
     echo "<</a>&nbsp;";
 	
 	
 
   } 
   if ($all_pages > $pag){
-  echo "<a stitle='Pagina Avanti' style='position: fixed; bottom: 0; left: 97%; font-weight: bold; color: rgb(255, 85, 153); font-size: 40pt; text-decoration: none; font-variant:small-caps' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag + 1) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+  echo "<a stitle='Pagina Avanti' style='position: fixed; bottom: 0; left: 95%; font-weight: bold; color: #1f1fc1; font-size: 40pt; text-decoration: none; font-variant:small-caps' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag + 1) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
     echo "></a>&nbsp;";
   }
 		echo "<br />";
@@ -628,16 +641,16 @@ if (isset($_GET['valoreRicerca'])) {
 	
 		
 		if ($pag > 1) {
-				echo "<a title='Vai alla prima pagina' style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+				echo "<a title='Vai alla prima pagina' style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=1&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo "<<</a>";
 		
-				echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag - 1) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+				echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag - 1) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo "<</a>";
 		}
 		
 		for ($i = $pag - 10; $i < $pag; $i++) {
 			if (in_array($i, $all_pages_array)) {
-			echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+			echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo ($i) . "</a>";
 				}
 				
@@ -645,15 +658,15 @@ if (isset($_GET['valoreRicerca'])) {
 		
 		for ($i = $pag; $i < $pag+10; $i++) {
 			if (in_array($i, $all_pages_array)) {
-			echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+			echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($i) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo ($i) . "</a>";
 				}
 				
 		}
 		 if ($all_pages > $pag){
-			echo "<a style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag + 1) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+			echo "<a style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($pag + 1) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo "></a>";
-				echo "<a title='Vai all\'ultima pagina' style='color: rgb(255, 85, 153); font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($all_pages) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
+				echo "<a title='Vai all\'ultima pagina' style='color: #1f1fc1; font-size: 12.5pt; font-variant:small-caps; margin-right: 10px;' href=\"" . $_SERVER['PHP_SELF'] . "?pag=" . ($all_pages) . "&valoreRicercaContiene=$valoreParziale&campoRicerca=$campo&sort=$sort&order=$orderParameter\">";
 				echo ">></a>";
 		}
 	
@@ -662,7 +675,7 @@ if (isset($_GET['valoreRicerca'])) {
 
 		//Chiudo il form, la tabella, e aggiungo il paragrafo che conta i risultati della ricerca
 		
-			echo "</form></table><p style='color: rgb(255, 85, 153); font-weight: bold; font-size: 12.5pt;'>";
+			echo "</form></table><p style='color: #1f1fc1; font-weight: bold; font-size: 12.5pt;'>";
 	
 			if ($count == 0) {
 			 echo "La ricerca non ha prodotto risultati";
@@ -696,16 +709,15 @@ if (isset($_GET['valoreRicerca'])) {
 	
 	<form action="searchResults.php" method="GET">
 		
-			<h3 style="font-size: 11pt; color: rgb(255, 85, 153)">Valore esatto:</h3>
+			<h3 style="font-size: 11pt; color: #1f1fc1">Valore esatto:</h3>
 	<input style="padding: 5px"  placeholder="Cerca" autocomplete="off" type="text" name="valoreRicerca" />
 	&#160;&#160;&#160;
 			<select  style="padding: 5px" name="campoRicerca">
-				<option value="nome">Nome</option>
-				<option value="genere">Genere</option>
-				<option value="label">Label</option>
+				<option value="titolo">Titolo</option>
+				<option value="artista">Artista/Gruppo</option>
 				<option value="anno">Anno</option>
-				<option value="valutazione">Valutazione</option>
-				<option value="descrizione">Descrizione</option>
+				<option value="etichetta">Etichetta</option>
+				<option value="tipo">Tipo</option>
 			</select>
 			&#160;&#160;&#160;
 			<input style="padding: 3px; font-size: 12pt"  class="buttons" type="submit" value="Cerca" name="submitSearch" />
@@ -713,30 +725,26 @@ if (isset($_GET['valoreRicerca'])) {
 		
 		<form action="searchResults.php" method="GET">
 		
-			<h3 style="font-size: 11pt; color: rgb(255, 85, 153)">Contiene...:</h3>
+			<h3 style="font-size: 11pt; color: #1f1fc1">Contiene...:</h3>
 	<input style="padding: 5px" placeholder="Cerca" autocomplete="off" type="text" name="valoreRicercaContiene" />
 	&#160;&#160;&#160;
 			<select style="padding: 5px" name="campoRicerca">
-				<option value="nome">Nome</option>
-				<option value="genere">Genere</option>
-				<option value="label">Label</option>
+				<option value="titolo">Titolo</option>
+				<option value="artista">Artista/Gruppo</option>
 				<option value="anno">Anno</option>
-				<option value="valutazione">Valutazione</option>
-				<option value="descrizione">Descrizione</option>
+				<option value="etichetta">Etichetta</option>
+				<option value="tipo">Tipo</option>
 			</select>
 			&#160;&#160;&#160;
 			<input style="padding: 3px; font-size: 12pt" class="buttons" type="submit" value="Cerca" name="submitSearch" />
 		</form>
-	<h3 style="font-size: 11pt;  color: rgb(255, 85, 153)">Filtra:</h3>
-	<a style="display: inline-block; color: rgb(255, 85, 153)" href="/InventarioConcetta/searchResults.php?pag=1&valoreRicerca=TRUE&campoRicerca=convention&order=ascendente&sort=nome&submitSearch=Cerca">Convention</a>
-	<span>-</span>
-<a style="display: inline-block; color: rgb(255, 85, 153)" href="/InventarioConcetta/searchResults.php?pag=1&valoreRicerca=FALSE&campoRicerca=convention&order=ascendente&sort=nome&submitSearch=Cerca">Non convention</a>
+	
 	<br />
 	
 	<h3 style="height: auto; width: intrinsic; background: transparent; border: none" ><a class="buttons" style="text-decoration: none; color: black; font-size: 12pt; " href="./showData.php">Torna al database</a>
 	<br /><br />
 	
-	<a style="margin-bottom: 50px; height: 50px; background-image: url('inventarioImages/home.png'); background-size: cover; position: relative;  bottom: 0; font-size: 20pt; text-decoration: none" title="Vai alla pagina iniziale" href="/InventarioConcetta/index.html">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</a>
+	<a style="margin-bottom: 50px; height: 50px; background-image: url('images/home.png'); background-size: contain; background-repeat: no-repeat; position: relative;  bottom: 0; font-size: 20pt; text-decoration: none" title="Vai alla pagina iniziale" href="/InventarioNicola/index.html">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</a>
 	</div>
 
 	

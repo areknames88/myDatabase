@@ -30,13 +30,13 @@
 	}
 			
 			
-			$query = "UPDATE dolls SET nome='" . pg_escape_string($_POST['nome']) . "', genere=" . ifEmpty(pg_escape_string($_POST['genere'])) . ", label=" . ifEmpty(pg_escape_string($_POST['label'])) . ", anno=" . isEmptyInteger($_POST['anno']) . ", valutazione=" . isEmptyInteger($_POST['valutazione']) . ", descrizione =" . ifEmpty(pg_escape_string($_POST['descrizione'])) . ", copertina =" . isEmptyCover(pg_escape_string($_POST['copertina'])) . " WHERE ID = '$itemId';";
+			$query = "UPDATE collezione SET titolo='" . pg_escape_string($_POST['titolo']) . "', artista=" . ifEmpty(pg_escape_string($_POST['artista'])) . ", anno=" . isEmptyInteger($_POST['anno']) . ", etichetta=" . isEmptyInteger($_POST['etichetta']) . ", tipo =" . ifEmpty(pg_escape_string($_POST['tipo'])) . ", copertina =" . isEmptyCover(pg_escape_string($_POST['copertina'])) . ", interno=" . isEmptyCover(pg_escape_string($_POST['interno'])) . " WHERE ID = '$itemId';";
 	
 
 		$rs = pg_query($connection, $query) or die("Cannot execute query: $query\n");
 		
 		
-		//$location = "http://127.0.0.1:8080/InventarioConcetta/onerecord.php?itemId=$itemId&pag=$pag&ricerca=false&sort=$sort&order=$order";
+		//$location = "http://127.0.0.1:8080/InventarioNicola/onerecord.php?itemId=$itemId&pag=$pag&ricerca=false&sort=$sort&order=$order";
 		
 		
 		
@@ -56,35 +56,30 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<title>Inventario di Concetta</title>
-<meta name="description" content="Inventario di Concetta" />
+<title>Inventario di Nicola</title>
+<meta name="description" content="Inventario di Nicola" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <style>
 
-	@font-face {
-    font-family: 'Barbie';
-    src: url(fonts/Barbie.ttf);
-}
 
 	* {
-		font-family: Barbie;
+		font-family: Arial;
 	}
 
 	body {
-		background-color: #FAE4D7;
-		font-family: Barbie, Arial, Verdana, Georgia;
+		background-color: lightgrey;
+		font-family: Arial, Verdana, Georgia;
 	}
 	
 	.buttons {
 		padding: 10px;
 		font-size: 16pt;
-		background-color: rgb(255, 85, 153);
-		border: 2px solid ivory;
-		outline: 1px solid grey;
-		box-shadow: 2px 2px 2px 2px rgba(255, 255, 255, 0.5);
+		background-color: lightblue;
+		border: 0.5px solid black;
+		box-shadow: 2px 2px 2px 2px grey;
 	}
 	
 	
@@ -104,7 +99,7 @@
 	
 	#mainTable tr td {
 		border: 0.2px solid darkgrey;
-		background-color: white;
+		background-color: lightblue;
 		width: 10%;
 		
 		
@@ -117,8 +112,8 @@
 	}
 	
 	#intestazione td {
-		background-color: rgb(208, 219, 208) !important;
-		color: rgb(13, 80, 188);
+		background-color: lightgrey !important;
+		color: ivory;
 		font-weight: bold;
 		
 	}
@@ -225,8 +220,8 @@
 		text-align: center;
 		vertical-align:middle;
 		margin-left: 2%;
-		display: inline-block;
-		height:80vh;
+		float: right;
+	
 	}
 	
 	.imgDiv img {
@@ -286,15 +281,15 @@
 		} else {
 			$valoreRicercaContiene = '';
 		}
-		$url = "/InventarioConcetta/showData.php";
-		$urlRicerca = "/InventarioConcetta/searchResults.php";
+		$url = "/InventarioNicola/showData.php";
+		$urlRicerca = "/InventarioNicola/searchResults.php";
 		
 		if ($ricercaBoolean == "true" and $valoreRicerca !== '') {
 			echo "<h3 style='margin-bottom: 40px'><a class='buttons' style='text-decoration: none; color: ivory' href=\"" . $urlRicerca . "?pag=" . ($pag) . "&valoreRicerca=$valoreRicerca&campoRicerca=$campoRicerca&sort=$sort&order=$order\">";
 		} else if ($ricercaBoolean == "true" and $valoreRicerca == '') {
 		echo "<h3 style='margin-bottom: 40px'><a class='buttons' style='text-decoration: none; color: ivory' href=\"" . $urlRicerca . "?pag=" . ($pag) . "&valoreRicercaContiene=$valoreRicercaContiene&campoRicerca=$campoRicerca&sort=$sort&order=$order\">";
 		} else {
-		echo "<h3 style='margin-bottom: 40px; margin-top: 40px'><a class='buttons' style='text-decoration: none; color: ivory' href=\"" . $url . "?pag=" . ($pag) . "&sort=$sort&order=$order\">";
+		echo "<h3 style='margin-bottom: 40px; margin-top: 40px'><a class='buttons' style='text-decoration: none; color: black' href=\"" . $url . "?pag=" . ($pag) . "&sort=$sort&order=$order\">";
 		}
 		echo "Torna indietro</a></h3><br/><br/>";
 		echo "<button class='buttons' onclick='showUpdateForm(this)'>Modifica</button>";
@@ -304,32 +299,26 @@
 
 		$connection = pg_connect("host=localhost dbname=inventario port=5432 user=postgres password=postgres") or die('connection failed');	
 		
-		$query = "SELECT * FROM dolls WHERE dolls.id = $itemId";
+		$query = "SELECT * FROM collezione WHERE collezione.id = $itemId";
 		
 		$rs = pg_query($connection, $query) or die("Cannot execute query: $query\n");
 		while ($row = pg_fetch_row($rs)) {
 			
-			$label;
-				if ($row[3] != '') {
-				$label = " - $row[3]";	
-				} else {
-				$label = "";
-				}
-			
+						
 			echo "<form method='POST' id='updateRecord'>
-					<h3 style='font-weight: bold'>Nome: </h3><br/><input name='nome' type'text' value='$row[1]' />
+					<h3 style='font-weight: bold'>Titolo: </h3><br/><input name='titolo' type'text' value='$row[1]' />
 					<br /><br />
-					<h3>Genere: </h3><br/><input name='genere' type='text' value='$row[2]' />
+					<h3>Artista/Gruppo: </h3><br/><input name='artista' type='text' value='$row[2]' />
 					<br /><br />
-					<h3>Label: </h3><br /><input name='label' type='text' value='$label' />
+					<h3 style='font-weight: bold'>Anno: </h3><br/><input name='anno' type='number' value='$row[3]' />
 					<br /><br />
-					<h3 style='font-weight: bold'>Anno: </h3><br/><input name='anno' type='number' value='$row[4]' />
+					<h3 style='font-weight: bold'>Etichetta: </h3><br /><input name='etichetta' type='number' value='$row[4]' />
 					<br /><br />
-					<h3 style='font-weight: bold'>Valutazione: </h3><br /><input name='valutazione' type='number' value='$row[5]' />
+					<h3 style='font-weight: bold'>Tipo: </h3><br /><input type='text' name='tipo' value='$row[5]' />
 					<br /><br />
-					<h3 style='font-weight: bold'>Descrizione: </h3><br /><textarea spellcheck='false' style='font-size: 15pt;' autocomplete='off' cols='55' rows='5' name='descrizione'>$row[7]</textarea>
+					<h3 style='font-weight: bold'>Copertina: </h3><br /><input type='text' name='copertina' value='$row[6]' />
 					<br /><br />
-					<h3 style='font-weight: bold'>Copertina: </h3><br /><input type='tet' name='copertina' value='$row[8]' />
+						<h3 style='font-weight: bold'>Interno Copertina: </h3><br /><input type='text' name='interno' value='$row[7]' />
 					<br /><br />
 					<input type='submit' name='update' class='buttons' value='Aggiorna' />
 					</form>";
@@ -339,56 +328,47 @@
 		
 		
 			
-			$label;
-				if ($row[3] != '') {
-				$label = " - $row[3]";	
-				} else {
-				$label = "";
-				}
-				
-			$conventionDoll;
-				if ($row[5] == 't') {
-					$conventionDoll = "Si";
-				} else {
-					$conventionDoll = "No";
-				}
-				
+			
 			
 				
 				
-			echo "<h3 style='font-weight: bold;'>Nome: </h3><p><span style='font-style: italic'>$row[1]</span></p>";
+			echo "<h3 style='font-weight: bold;'>Titolo: </h3><p><span style='font-style: italic'>$row[1]</span></p>";
 				echo "<br />";
 				
 				if ($row[2] != NULL) {
-			echo "<h3 style='font-weight: bold;'>Genere: </h3><p>$row[2]$label</p>";
+			echo "<h3 style='font-weight: bold;'>Artista/Gruppo: </h3><p>$row[2]</p>";
 				echo "<br />";
 				}
-			if ($row[4] != NULL) {
-			echo "<h3 style='font-weight: bold;'>Anno: </h3><p>$row[4]</p>";
+			if ($row[3] != NULL) {
+			echo "<h3 style='font-weight: bold;'>Anno: </h3><p>$row[3]</p>";
 					echo "<br />";
 			}
-				if ($row[5] != NULL) {
-			echo "<h3 style='font-weight: bold;'>Valutazione: </h3><p>$row[5]</p>";
+				if ($row[4] != NULL) {
+			echo "<h3 style='font-weight: bold;'>Etichetta: </h3><p>$row[4]</p>";
 					echo "<br />";
 			}
 		
-			if ($row[6] != NULL) {
-			echo "<h3 style='font-weight: bold;'>Convention Doll: </h3><p>$conventionDoll</p>";
+			if ($row[5] != NULL) {
+			echo "<h3 style='font-weight: bold;'>Tipo: </h3><p>$row[5]</p>";
 				echo "<br />";
 			}
 			
-			if ($row[7] != NULL) {
-			echo "<h3 style='font-weight: bold;'>Descrizione: </h3><p style='width: 100%; word-wrap: break-word; text-align: justify; height: 250px; overflow-y: auto'>$row[7]</p>";
-				echo "<br />";
-			}
 		
 				echo "</div>";
 		
 				echo "<div class='imgDiv'>";
 		
-				echo "<img src='inventarioImages/$row[8]' />";
+				echo "<img src='inventarioImages/$row[6]' />";
 		
 				echo "</div>";
+				
+				if ($row[7] != NULL) {
+				echo "<div class='imgDiv'>";
+		
+				echo "<img src='inventarioImages/$row[7]' />";
+		
+				echo "</div>";
+				}
 		}
 		
 	
