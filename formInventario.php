@@ -166,7 +166,7 @@
 		<div id="rettangolo" style="position: absolute; display: none; width: 320px; height: 320px; border: 2px solid red"></div>
 	</div>
 	
-	<button id="addCover">
+	<button style="display: none" id="addCover">
 		Aggiungi Foto
 	</button>
 	
