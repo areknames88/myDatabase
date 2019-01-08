@@ -18,7 +18,9 @@
 		font-family: Arial;
 	}
 	
-	
+	h3 {
+		color: 
+	}
 
 	body {
 		background-color: lightgrey;
@@ -60,7 +62,8 @@
 	}
 	
 	#addCover {
-			float: left; cursor: pointer; margin-left: 60px; background-color: lightblue; border: 0.5px solid black;width: 20%; height: 300px; font-size: 20pt; font-variant: small-caps
+			float: left; cursor: pointer; margin-left: 60px; background-color: lightblue; 
+	border: 0.5px solid black;width: 20%; height: 300px; font-size: 20pt; font-variant: small-caps
 	}
 	
 	#canvasCont {
@@ -81,7 +84,7 @@
 		height: 38px;
 		width: 98%;
 		margin-left: 1%;
-		background-image: url('./inventarioImages/greca.png');
+		
 		background-size: 80px;
 	}
 	
@@ -97,6 +100,11 @@
 	
 	.databaseButton {
 			display: inline-block; margin-left: 10vh; border: none !important; background-color: transparent;
+	}
+	
+	.homeIcon {
+			margin-left: 20px; background-image: url('images/home.png'); background-repeat: no-repeat; background-size: contain; 
+			position: relative;  bottom: 0; font-size: 20pt; text-decoration: none
 	}
 	
 	@media screen and (max-width: 600px) {
@@ -125,6 +133,10 @@
 		
 		.databaseButton {
 				display: block; margin-left: 0;
+		}
+		
+		.homeIcon {
+				margin-left: 40px;
 		}
 		
 	}
@@ -443,7 +455,7 @@ pg_close($connection);
 ?>
 </ul>
 
-<a style="margin-left: 20px; background-image: url('inventarioImages/home.png'); background-size: cover; position: relative;  bottom: 0; font-size: 20pt; text-decoration: none" title="Vai alla pagina iniziale" href="InventarioNicola/index.html">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</a>
+<a class="homeIcon" title="Vai alla pagina iniziale" href="InventarioNicola/index.html">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</a>
 
 </div>
 
