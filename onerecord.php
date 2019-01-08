@@ -30,7 +30,7 @@
 	}
 			
 			
-			$query = "UPDATE collezione SET titolo='" . pg_escape_string($_POST['titolo']) . "', artista=" . ifEmpty(pg_escape_string($_POST['artista'])) . ", anno=" . isEmptyInteger($_POST['anno']) . ", etichetta=" . isEmptyInteger($_POST['etichetta']) . ", tipo =" . ifEmpty(pg_escape_string($_POST['tipo'])) . ", copertina =" . isEmptyCover(pg_escape_string($_POST['copertina'])) . ", interno=" . isEmptyCover(pg_escape_string($_POST['interno'])) . " WHERE ID = '$itemId';";
+			$query = "UPDATE collezione SET titolo='" . pg_escape_string($_POST['titolo']) . "', artista=" . ifEmpty(pg_escape_string($_POST['artista'])) . ", anno=" . isEmptyInteger($_POST['anno']) . ", etichetta=" . ifEmpty(pg_escape_string($_POST['etichetta'])) . ", tipo =" . ifEmpty(pg_escape_string($_POST['tipo'])) . ", copertina =" . isEmptyCover(pg_escape_string($_POST['copertina'])) . ", interno=" . isEmptyCover(pg_escape_string($_POST['interno'])) . " WHERE ID = '$itemId';";
 	
 
 		$rs = pg_query($connection, $query) or die("Cannot execute query: $query\n");
@@ -314,7 +314,7 @@
 					<br /><br />
 					<h3 style='font-weight: bold'>Anno: </h3><br/><input name='anno' type='number' value='$row[3]' />
 					<br /><br />
-					<h3 style='font-weight: bold'>Etichetta: </h3><br /><input name='etichetta' type='number' value='$row[4]' />
+					<h3 style='font-weight: bold'>Etichetta: </h3><br /><input name='etichetta' type='text' value='$row[4]' />
 					<br /><br />
 					<h3 style='font-weight: bold'>Tipo: </h3><br /><input type='text' name='tipo' value='$row[5]' />
 					<br /><br />
