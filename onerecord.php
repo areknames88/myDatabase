@@ -219,6 +219,7 @@
 		width: 45%;
 		text-align: center;
 		vertical-align:middle;
+		clear: right;
 		margin-left: 2%;
 		float: right;
 	
