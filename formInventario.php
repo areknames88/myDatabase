@@ -8,6 +8,7 @@
 <title>Inventario di Nicola</title>
 <meta name="description" content="Inventario di Nicola" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon"  href='./images/favicon.png'/>
 <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css" />
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-ui-1.12.1/jquery-ui.min.js"></script>
