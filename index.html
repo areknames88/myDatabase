@@ -56,6 +56,16 @@
 		color: #1f1fc1; font-size: 30pt; font-style: italic; text-align: center; padding: 15px; font-family: Impact, Charcoal, sans-serif;
 	}
 	
+	#cavoAggiungi {
+		padding: 0; float: left; width: 30%; border-radius: 30px; margin-left: 19.19%; height: 150px;  border: 5px solid #1f1fc1; 
+		border-top: none; opacity: 0.75
+	}
+	
+	#cavoDatabase {
+		display: inline-block; width: 30%; margin-right: 19%; height: 150px; border: 5px solid #1f1fc1; 
+		border-radius: 30px; border-top: none; padding: 0; opacity: 0.75
+	}
+	
 	@media screen and (max-width: 400px) {
 		.title { font-size: 25pt }
 		
@@ -71,6 +81,12 @@
 		}
 	
 	}
+	
+	@media screen and (max-width: 1200px) {
+		#cavoAggiungi, #cavoDatabase {
+			display: none;
+		}
+	}
 	</style>
 	</head>
 	<body>
@@ -78,8 +94,11 @@
 		<h1 class="title">Collezione musicale - Nicola Di Maggio</h1>
 		<div>
 		
-			<div onmouseover="this.style.opacity = 1" onmouseleave="this.style.opacity = 0.75" class="aggiungi" ><a href="./formInventario.php">Aggiungi</a></div>
-				<div class="database" onmouseover="this.style.opacity = 1" onmouseleave="this.style.opacity = 0.75" ><a href="./showData.php">Database</a></div>
+			<div onmouseover="this.style.opacity = 1; document.getElementById('cavoAggiungi').style.opacity = 1" onmouseleave="this.style.opacity = 0.75; document.getElementById('cavoAggiungi').style.opacity = 0.75" class="aggiungi" ><a href="./formInventario.php">Aggiungi</a></div>
+				<div class="database" onmouseover="this.style.opacity = 1; document.getElementById('cavoDatabase').style.opacity = 1" onmouseleave="this.style.opacity = 0.75; document.getElementById('cavoDatabase').style.opacity = 0.75" ><a href="./showData.php">Database</a></div>
+			<div id="cavoAggiungi"></div>
+			<div id="cavoDatabase"></div>
+		
 		</div>
 		
 	
